@@ -11,15 +11,20 @@ $routes = [
     '/reports' => 'controllers/reports/report.controller.php',
     '/manages' => 'controllers/manages/manage.controller.php',
     '/profiles' => 'controllers/profiles/profile.controller.php',
+    '/error' => 'controllers/errors/error.php'
 ];
 
-if (array_key_exists($uri, $routes)) {
+if (array_key_exists($uri, $routes) and $uri !== '/error') {
     $page = $routes[$uri];
 } else {
-   http_response_code(404);
-   $page = 'views/errors/404.php';
+    $page = $routes[$uri];
+    // http_response_code(404);
 }
-require "layouts/header.php";
-require "layouts/navbar.php";
+if ($uri !== '/error') {
+    require "layouts/header.php";
+    require "layouts/navbar.php";
+    require $page;
+    require "layouts/footer.php";
+    return;
+}
 require $page;
-require "layouts/footer.php";

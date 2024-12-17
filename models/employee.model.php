@@ -1,38 +1,37 @@
 <?php
 
-function createPost(string $title, string $description) : bool
+function createEmployee(string $title, string $description) : bool
 {
     global $connection;
-    $statement = $connection->prepare("insert into posts (title, description) values (:title, :description)");
+    $statement = $connection->prepare("insert into employees (title, description) values (:title, :description)");
     $statement->execute([
         ':title' => $title,
         ':description' => $description
-
     ]);
 
     return $statement->rowCount() > 0;
 }
 
-function getPost(int $id) : array
+function getEmployee(int $id) : array
 {
     global $connection;
-    $statement = $connection->prepare("select * from posts where id = :id");
+    $statement = $connection->prepare("select * from employees where id = :id");
     $statement->execute([':id' => $id]);
     return $statement->fetch();
 }
 
-function getPosts() : array
+function getEmployees() : array
 {
     global $connection;
-    $statement = $connection->prepare("select * from posts");
+    $statement = $connection->prepare("select * from employees");
     $statement->execute();
     return $statement->fetchAll();
 }
 
-function updatePost(string $title, string $description, int $id) : bool
+function updateEmployee(string $title, string $description, int $id) : bool
 {
     global $connection;
-    $statement = $connection->prepare("update posts set title = :title, description = :description where id = :id");
+    $statement = $connection->prepare("update employees set title = :title, description = :description where id = :id");
     $statement->execute([
         ':title' => $title,
         ':description' => $description,
@@ -43,10 +42,10 @@ function updatePost(string $title, string $description, int $id) : bool
     return $statement->rowCount() > 0;
 }
 
-function deletePost(int $id) : bool
+function deleteEmployee(int $id) : bool
 {
     global $connection;
-    $statement = $connection->prepare("delete from posts where id = :id");
+    $statement = $connection->prepare("delete from employees where id = :id");
     $statement->execute([':id' => $id]);
     return $statement->rowCount() > 0;
 }
